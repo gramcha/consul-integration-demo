@@ -6,25 +6,20 @@
 package com.gramcha.controller;
 
 import java.net.URI;
+
 import java.util.Optional;
 
 import javax.naming.ServiceUnavailableException;
-
-import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 @RestController
 @RefreshScope
@@ -35,8 +30,8 @@ public class DiscoveryClientController {
 	@Value("${env.welcomeMessage}")
     String welcomeMessage;
 	
-    public Optional<URI> serviceUrl() {
-        return discoveryClient.getInstances("consul-integration-demo")
+    public Optional<URI> serviceUrl(String appInstanceId) {
+        return discoveryClient.getInstances(appInstanceId)
           .stream()
           .map(si -> si.getUri())
           .findFirst();
@@ -45,8 +40,8 @@ public class DiscoveryClientController {
     public String discoveryPing() throws RestClientException, 
       ServiceUnavailableException {
     		RestTemplate restTemplate = new RestTemplate();
-    		System.out.println(serviceUrl());
-        URI service = serviceUrl()
+    		System.out.println(serviceUrl("consul-integration-demo"));
+        URI service = serviceUrl("consul-integration-demo")
           .map(s -> s.resolve("/ping"))
           .orElseThrow(ServiceUnavailableException::new);
         return restTemplate.getForEntity(service, String.class)

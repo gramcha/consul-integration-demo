@@ -27,7 +27,7 @@ public class DiscoveryClientController {
 	@Autowired
     private DiscoveryClient discoveryClient;
  
-	@Value("${env.welcomeMessage}")
+//	@Value("${env.welcomeMessage}")
     String welcomeMessage;
 	
     public Optional<URI> serviceUrl(String appInstanceId) {

@@ -31,7 +31,7 @@ Add the spring-cloud-starter-consul-all dependency to pom.xml
     <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-consul-all</artifactId>
-        <version>1.3.0.RELEASE</version>
+        <version>2.0.0.RELEASE</version>
     </dependency>
 ###### Step 3
 *execute*

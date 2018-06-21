@@ -19,10 +19,15 @@ node {
 
         checkout scm
     }
+    stage('Prerequisite') {
+    		sh 'echo "no requirements"'
+    }
     stage('Build') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
-
+         docker.image('maven:3.3.3').inside {
+            sh 'mvn install -DskipTests'
+        }
         app = docker.build("consul-integration-demo")
     }
     stage('Test image') {

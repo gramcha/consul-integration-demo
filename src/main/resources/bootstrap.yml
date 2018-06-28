@@ -3,7 +3,7 @@ spring:
     name: consul-integration-demo
   cloud:
     consul:
-      host: consul
+      host: consul #add "127.0.0.1 consul" without quotes in /etc/hosts file this is required for building the app. make sure consul running in deve mode while building this app.
       port: 8500
       discovery:
         preferIpAddress: true

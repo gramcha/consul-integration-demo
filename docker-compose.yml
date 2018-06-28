@@ -1,5 +1,8 @@
 version: "2.0"
 
+#Docker host machine IP - copy below export command without # and execute before executing docker-compose command. or copy into bash_profile or bash.rc file.
+#export DOCKER_HOST_IP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
+
 services:
   consul:
     image: consul:latest
@@ -7,11 +10,16 @@ services:
       - 8400:8400
       - 8500:8500
       - 54:8600/udp
+    environment:
+      - IP=$DOCKER_HOST_IP#Set the env var DOCKER_HOST_IP of docker running machine
   consul-integration-demo:
     build: .
     ports:
      - "8080:8080"
     depends_on:
       - consul
-    links:
-      - consul:consul #add "127.0.0.1 consul" without quotes in /etc/hosts file
+    environment:
+      - IP=$DOCKER_HOST_IP#Set the env var DOCKER_HOST_IP of docker running machine
+    #links: #links for consul is not required as long as you have environment.IP
+    #  - consul:consul #add "127.0.0.1 consul" without quotes in /etc/hosts file
+    

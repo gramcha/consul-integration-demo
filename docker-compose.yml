@@ -14,4 +14,4 @@ services:
     depends_on:
       - consul
     links:
-      - consul:consul
+      - consul:consul #add "127.0.0.1 consul" without quotes in /etc/hosts file

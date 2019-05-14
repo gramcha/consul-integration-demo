@@ -1,0 +1,14 @@
+
+docker run \
+  -u root \
+  --rm \
+  -p 8080:8080 \
+  -p 50000:50000 \
+  -v jenkins-data:/var/jenkins_home \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  jenkinsci/blueocean
+  
+  Unlock Jenkins
+	To ensure Jenkins is securely set up by the administrator, a password has been written to the log (not sure where to find it?) and this file on the server:
+  
+  /var/jenkins_home/secrets/initialAdminPassword
